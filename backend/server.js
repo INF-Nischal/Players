@@ -1,13 +1,19 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const cors = require('cors');
 require('dotenv').config();
 const router = require('./routes/userRoutes');
 
 const app = express();
-app.use(express.json());
-const port = process.env.PORT;
 
-app.use('/players/', router);
+app.use(cors({ origin: '*' }));
+
+app.use(express.json({ limit: '5mb' }));
+app.use(express.urlencoded({limit:'5mb', extended: true }));
+
+app.use('/players', router);
+
+const port = process.env.PORT;
 
 async function startServer() {
     try {
