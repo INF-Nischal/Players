@@ -1,11 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PlayerForm = () => {
-
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     image: "",
@@ -46,8 +45,8 @@ const PlayerForm = () => {
         formData
       );
 
+      navigate("/players");
       console.log("Data sent successfully" + response.data);
-      navigate("/");
     } catch (error) {
       console.log(error);
     } finally {
@@ -56,59 +55,61 @@ const PlayerForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className="flex flex-col">
-        <span>Profile</span>
+    <form onSubmit={handleSubmit} className="p-5 flex flex-col items-center">
+      <div className="flex flex-col mb-5 w-[450px]">
+        <span className="mb-2">Profile</span>
         <input
           type="file"
           accept="image/jpg, image/jpeg, image/png"
           onChange={handleImageChange}
         />
       </div>
-      <div className="flex flex-col">
-        <span>Name</span>
+      <div className="flex flex-col mb-5 w-[450px]">
+        <span className="mb-2">Name</span>
         <input
           type="text"
-          className="border-2 outline-none"
+          className="px-4 py-2 outline-none border-2"
           onChange={(e) =>
             setFormData((prevData) => ({ ...prevData, name: e.target.value }))
           }
         />
       </div>
-      <div className="flex flex-col">
-        <span>Age</span>
+      <div className="flex flex-col mb-5 w-[450px]">
+        <span className="mb-2">Age</span>
         <input
           type="text"
-          className="border-2 outline-none"
+          className="px-4 py-2 outline-none border-2"
           onChange={handleAgeChange}
         />
       </div>
-      <div className="flex flex-col">
-        <span>Gender</span>
-        <div>
-          <input
-            type="radio"
-            name="gender"
-            value="male"
-            onChange={handleRadioChange}
-          />
-          <span>male</span>
-        </div>
-        <div>
-          <input
-            type="radio"
-            name="gender"
-            value="female"
-            onChange={handleRadioChange}
-          />
-          <span>female</span>
+      <div className="flex flex-col mb-5 w-[450px]">
+        <span className="mb-2">Gender</span>
+        <div className="flex justify-between w-1/3">
+          <div>
+            <input
+              type="radio"
+              name="gender"
+              value="male"
+              onChange={handleRadioChange}
+            />
+            <span>male</span>
+          </div>
+          <div>
+            <input
+              type="radio"
+              name="gender"
+              value="female"
+              onChange={handleRadioChange}
+            />
+            <span>female</span>
+          </div>
         </div>
       </div>
-      <div className="flex flex-col">
-        <span>Position</span>
+      <div className="flex flex-col mb-5 w-[450px]">
+        <span className="mb-2">Position</span>
         <input
           type="text"
-          className="border-2 outline-none"
+          className="px-4 py-2 outline-none border-2"
           onChange={(e) =>
             setFormData((prevData) => ({
               ...prevData,
@@ -117,10 +118,10 @@ const PlayerForm = () => {
           }
         />
       </div>
-      <div className="flex flex-col">
-        <span>Description</span>
+      <div className="flex flex-col mb-5 w-[450px]">
+        <span className="mb-2">Description</span>
         <textarea
-          className="border-2 outline-none"
+          className="px-4 py-2 outline-none border-2"
           onChange={(e) =>
             setFormData((prevData) => ({
               ...prevData,
@@ -130,7 +131,14 @@ const PlayerForm = () => {
         ></textarea>
       </div>
 
-      <button className="border-2 px-4 py-2 rounded-md cursor-pointer disabled:cursor-no-drop" disabled={loading}>Submit</button>
+      <div className="w-[450px] flex justify-center items-center">
+        <button
+          className="w-[180px] bg-gray-300 px-4 py-2 rounded-md cursor-pointer disabled:cursor-no-drop"
+          disabled={loading}
+        >
+          Submit
+        </button>
+      </div>
     </form>
   );
 };
