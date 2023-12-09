@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const PlayerForm = () => {
   const [loading, setLoading] = useState(false);
@@ -40,15 +41,19 @@ const PlayerForm = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post(
+      await axios.post(
         "http://localhost:5000/players/register",
         formData
       );
 
       navigate("/players");
-      console.log("Data sent successfully" + response.data);
+      toast.success("Data sent successfully");
     } catch (error) {
-      console.log(error);
+      if (error.response && error.response.status === 413) {
+        toast.error("Payload too large. Please upload a smaller image.");
+      } else {
+        toast.error(error.message);
+      }
     } finally {
       setLoading(false);
     }

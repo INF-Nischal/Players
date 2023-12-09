@@ -33,8 +33,12 @@ const registerUser = async (req, res) => {
 
     res.status(200).json({ message: "New player added successfully" });
   } catch (error) {
-    console.error("Error in registerUser", error);
-    res.status(500).json({ message: "Inernal Server Error" });
+    if (error.name === 'PayloadTooLargeError') {
+      res.status(413).json({ error: "Payload too large. Please upload a smaller image." });
+    } else {
+      console.error("Error in registerUser", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }
   }
 };
 
