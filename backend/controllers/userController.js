@@ -17,8 +17,8 @@ const registerUser = async (req, res) => {
     if (image) {
       const uploadResponse = await cloudinary.uploader.upload(image, {
         folder: "players",
-        width: 100,
-        height: 150,
+        width: 300,
+        height: 300,
         crop: "fill",
       });
 
@@ -26,15 +26,19 @@ const registerUser = async (req, res) => {
     }
 
     if (imageURL) {
-      data.image = imageURL;
+      const publicIdParts = imageURL.split("/");
+      const publicId = publicIdParts[publicIdParts.length - 1].split(".")[0];
+      data.image = { public_id: publicId, url: imageURL };
     }
 
     await User.create(data);
 
     res.status(200).json({ message: "New player added successfully" });
   } catch (error) {
-    if (error.name === 'PayloadTooLargeError') {
-      res.status(413).json({ error: "Payload too large. Please upload a smaller image." });
+    if (error.name === "PayloadTooLargeError") {
+      res
+        .status(413)
+        .json({ error: "Payload too large. Please upload a smaller image." });
     } else {
       console.error("Error in registerUser", error);
       res.status(500).json({ message: "Internal Server Error" });
@@ -61,6 +65,10 @@ const deleteUser = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.image && user.image.public_id) {
+      await cloudinary.uploader.destroy(`players/${user.image.public_id}`);
     }
 
     res.status(200).json({ message: "User deleted successfully" });

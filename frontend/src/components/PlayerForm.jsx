@@ -74,6 +74,7 @@ const PlayerForm = () => {
         <input
           type="text"
           className="px-4 py-2 outline-none border-2"
+          placeholder="E.g. John Doe"
           onChange={(e) =>
             setFormData((prevData) => ({ ...prevData, name: e.target.value }))
           }
@@ -84,29 +85,32 @@ const PlayerForm = () => {
         <input
           type="text"
           className="px-4 py-2 outline-none border-2"
+          placeholder="E.g. 20"
           onChange={handleAgeChange}
         />
       </div>
       <div className="flex flex-col mb-5 w-[450px]">
         <span className="mb-2">Gender</span>
         <div className="flex justify-between w-1/3">
-          <div>
+          <div className="flex items-center">
             <input
               type="radio"
               name="gender"
               value="male"
+              id="male"
               onChange={handleRadioChange}
             />
-            <span>male</span>
+            <label htmlFor="male" className="ml-2">Male</label>
           </div>
-          <div>
+          <div className="flex items-center ml-5">
             <input
               type="radio"
               name="gender"
               value="female"
+              id="female"
               onChange={handleRadioChange}
             />
-            <span>female</span>
+            <label htmlFor="female" className="ml-2">Female</label>
           </div>
         </div>
       </div>
@@ -115,6 +119,7 @@ const PlayerForm = () => {
         <input
           type="text"
           className="px-4 py-2 outline-none border-2"
+          placeholder="E.g. Forward"
           onChange={(e) =>
             setFormData((prevData) => ({
               ...prevData,
@@ -126,7 +131,7 @@ const PlayerForm = () => {
       <div className="flex flex-col mb-5 w-[450px]">
         <span className="mb-2">Description</span>
         <textarea
-          className="px-4 py-2 outline-none border-2"
+          className="px-4 py-2 outline-none border-2 h-[120px] text-justify"
           onChange={(e) =>
             setFormData((prevData) => ({
               ...prevData,
@@ -138,7 +143,7 @@ const PlayerForm = () => {
 
       <div className="w-[450px] flex justify-center items-center">
         <button
-          className="w-[180px] bg-gray-300 px-4 py-2 rounded-md cursor-pointer disabled:cursor-no-drop"
+          className="w-[180px] bg-gray-300 px-4 py-2 rounded-md cursor-pointer font-bold disabled:cursor-no-drop"
           disabled={loading}
         >
           Submit

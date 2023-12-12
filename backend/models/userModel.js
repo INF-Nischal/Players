@@ -3,9 +3,14 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
   {
     image: {
-      type: String,
-      required: [true, "Please provide the player image"],
-      trim: true,
+      public_id: {
+        type: String,
+        required: [true, "Please provide the player image public_id"],
+      },
+      url: {
+        type: String,
+        required: [true, "Please provide the player image url"],
+      },
     },
     name: {
       type: String,

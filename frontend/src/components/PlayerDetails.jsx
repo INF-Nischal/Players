@@ -32,29 +32,49 @@ const PlayerDetails = () => {
 
   return (
     <div className="px-8 py-4">
-      <h1 className="text-3xl">List of Players</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-3">
+      <h1 className="text-3xl mb-3">List of Players</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {players &&
           players.map((player) => {
             return (
-              <div key={player._id} className="flex py-3">
-                <div>
-                  <img src={player.image} alt={player.name} />
+              <div key={player._id} className="bg-gray-200 p-5 h-[300px]">
+                <div className="flex">
+                  <div className="h-full w-[30%] border-2 border-sky-500">
+                    <img
+                      src={player.image.url}
+                      alt={player.name}
+                      className="h-full w-full object-cover border-2"
+                    />
+                  </div>
+
+                  <div className="ml-2 w-[76%]">
+                    <span className="flex">
+                      Name:<p className="ml-3">{player.name}</p>
+                    </span>
+                    <span className="flex">
+                      Age: <p className="ml-3">{player.age}</p>{" "}
+                    </span>
+                    <span className="flex">
+                      Position: <p className="ml-3">{player.position}</p>{" "}
+                    </span>
+                    <span className="flex">
+                      Gender: <p className="ml-3">{player.gender}</p>{" "}
+                    </span>
+                    <span className="h-[100px] flex flex-col">
+                      <span className="flex-shrink-0">Description:</span>
+                      <p className="flex-shrink overflow-ellipsis overflow-hidden text-justify">
+                        {player.description}
+                      </p>
+                    </span>
+                  </div>
                 </div>
 
-                <div className="ml-2">
-                  <h3>{player.name}</h3>
-                  <p>{player.age}</p>
-                  <p>{player.position}</p>
-                  <p>Gender: {player.gender}</p>
-                  <p>{player.description}</p>
-                  <button
-                    onClick={() => handleClick(player._id)}
-                    className="bg-red-500 text-white mt-3 px-4 py-2 rounded-lg"
-                  >
-                    Delete
-                  </button>
-                </div>
+                <button
+                  onClick={() => handleClick(player._id)}
+                  className="bg-red-500 text-white mt-5 px-4 py-2 rounded-lg mx-auto block"
+                >
+                  Delete
+                </button>
               </div>
             );
           })}
